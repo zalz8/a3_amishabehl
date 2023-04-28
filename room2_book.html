@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Escape the Haunted Mansion - Room 2 - Book</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+    body{
+        background-image: url("https://i1.sndcdn.com/artworks-47JkQtz8UpyyMSth-y2e6lw-t500x500.jpg");
+    }
+    h1 {
+        text-align: center;
+        font-size: 36px;
+        color: white;
+        margin-top: 50px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+    }
+    p {
+        text-align: center;
+        font-size: 24px;
+        color: white;
+        margin: 50px 10px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+    }
+    button {
+        display: block;
+        margin: 20px auto;
+        font-size: 20px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #141313;
+        color: white;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+        border: none;
+        transition: background-color 0.3s ease-in-out;
+    }
+    button:hover {
+        background-color: #575353;
+    }
+    button + button {
+        margin-top: 10px;
+    }
+    #mute-button {
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			background-color: #e4dfdf;
+			border: none;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 2px 2px #000;
+			transition: all 0.2s ease-in-out;
+		}
+
+		#mute-button:hover {
+			background-color: #0f0e0e;
+			box-shadow: none;
+			transform: translateY(-2px);
+		}
+
+		#mute-button:active {
+			background-color: #fcfcfc;
+			transform: translateY(0);
+			box-shadow: none;
+			text-shadow: none;
+		}
+
+		#mute-button img {
+			width: 20px;
+			height: 20px;
+		}
+</style>
+<body>
+	<h1>Find the key!</h1>
+	<p id="hover-speech">You start flipping through the book, and you come across a strange passage that reads:</p>
+	<blockquote>"To escape the mansion, you must find the key hidden in the room where the bell tolls twice."</blockquote>
+	<p>You hear a bell tolling twice. Do you:</p>
+	<button onclick="window.location.href = 'room4.html';">Leave the room to find the key</button>
+	<button onclick="window.location.href = 'index.html';">Go back to the main hallway</button>
+</body>
+<button id="mute-button" onclick="toggleMute()">
+    <img src="https://img.icons8.com/ios-filled/50/000000/mute--v1.png"/>
+</button>
+
+<script>
+    let isMuted = false;
+    const muteButton = document.getElementById('mute-button');
+    const audio = new Audio('wrong-place-129242.mp3');
+
+    function toggleMute() {
+        if (!isMuted) {
+            audio.muted = true;
+            isMuted = true;
+            muteButton.innerHTML = '<img src="https://img.icons8.com/ios-filled/50/000000/mute--v1.png"/>';
+        } else {
+            audio.muted = false;
+            isMuted = false;
+            audio.play();
+            muteButton.innerHTML = '<img src="https://img.icons8.com/ios-filled/50/000000/speaker--v1.png"/>';
+        }
+    }
+
+    const hoverSpeech = document.getElementById('hover-speech');
+    const speech = new SpeechSynthesisUtterance();
+    speech.lang = 'en-US';
+    speech.text = hoverSpeech.textContent;
+    let isSpeaking = false;
+    
+    hoverSpeech.addEventListener('mouseover', () => {
+      if (!isSpeaking) {
+        window.speechSynthesis.speak(speech);
+        isSpeaking = true;
+      }
+    });
+    
+    hoverSpeech.addEventListener('mouseout', () => {
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        isSpeaking = false;
+      }
+    });
+    </script>
+</html>

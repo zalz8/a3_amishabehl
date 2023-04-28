@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1 id="title">Open the chest!</h1>
+	<audio id="scary-sound" src="wrong-place-129242.mp3"></audio>
+    <p id="hover-speech">You enter a room filled with cobwebs and dust. There's a large chest in the middle of the room. Do you:</p>
+	<button onclick="window.location.href = 'room1_chest.html';">Open the chest</button>
+	<button onclick="window.location.href = 'room1_exit.html';">Look for the exit</button>
+	<button onclick="window.location.href = 'index.html';">Go back to the main hallway</button>
+    
+    
+    
+      
+    <style>
+#title:hover {
+			color: red;
+		}
+        body{
+            background-image: url("https://t4.ftcdn.net/jpg/00/80/52/23/360_F_80522365_ElKpZiJmKReazQSkIfgUpT1d4pKhpJdt.jpg");
+        }
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: white;
+            margin-top: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+        }
+        
+        p {
+            text-align: center;
+            font-size: 24px;
+            color: white;
+            margin: 50px 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            font-size: 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #141313;
+            color: white;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            border: none;
+            transition: background-color 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #575353;
+        }
+        button + button {
+            margin-top: 10px;
+        }
+        #mute-button {
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			background-color: #e4dfdf;
+			border: none;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 2px 2px #000;
+			transition: all 0.2s ease-in-out;
+		}
+
+		#mute-button:hover {
+			background-color: #0f0e0e;
+			box-shadow: none;
+			transform: translateY(-2px);
+		}
+
+		#mute-button:active {
+			background-color: #fcfcfc;
+			transform: translateY(0);
+			box-shadow: none;
+			text-shadow: none;
+		}
+
+		#mute-button img {
+			width: 20px;
+			height: 20px;
+		}
+    </style>
+<button id="mute-button" onclick="toggleMute()">
+    <img src="https://img.icons8.com/ios-filled/50/000000/mute--v1.png"/>
+</button>
+
+<script>
+    let isMuted = false;
+    const muteButton = document.getElementById('mute-button');
+    const audio = new Audio('wrong-place-129242.mp3');
+
+    function toggleMute() {
+        if (!isMuted) {
+            audio.muted = true;
+            isMuted = true;
+            muteButton.innerHTML = '<img src="https://img.icons8.com/ios-filled/50/000000/mute--v1.png"/>';
+        } else {
+            audio.muted = false;
+            isMuted = false;
+            audio.play();
+            muteButton.innerHTML = '<img src="https://img.icons8.com/ios-filled/50/000000/speaker--v1.png"/>';
+        }
+    }
+
+		var title = document.getElementById("title");
+		var scarySound = document.getElementById("scary-sound");
+
+		title.addEventListener("mouseover", function() {
+			scarySound.play();
+		});
+  
+
+    const hoverSpeech = document.getElementById('hover-speech');
+    const speech = new SpeechSynthesisUtterance();
+    speech.lang = 'en-US';
+    speech.text = hoverSpeech.textContent;
+    let isSpeaking = false;
+    
+    hoverSpeech.addEventListener('mouseover', () => {
+      if (!isSpeaking) {
+        window.speechSynthesis.speak(speech);
+        isSpeaking = true;
+      }
+    });
+    
+    hoverSpeech.addEventListener('mouseout', () => {
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        isSpeaking = false;
+      }
+    });
+    </script>
+
+</body>
+</html>
