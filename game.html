@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>surprise!</title>
+    <style>
+        body {
+            font-size: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #fff;
+            text-align: center;
+            background-color: #2b2b2b;
+        }
+        h1 {
+            margin-top: 50px;
+            font-size: 35px;
+            line-height: 1.5;
+        }
+
+        #jumpscare {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 9999;
+        }
+
+        #jumpscare img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        #playButton {
+            margin-top: 50px;
+            padding: 10px;
+            font-size: 18px;
+            background-color: #ccc;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #playButton:hover {
+            background-color: #ddd;
+            color: #2b2b2b;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 onmouseover="speakText(this.innerHTML)" onmouseout="stopSpeaking()">Deep within the heart of the abandoned mansion lies a dark and sinister secret. A child, once full of life and joy, was left to wither away in the cold, damp hallways. The whispers of his tortured soul echo through the empty rooms, haunting all who dare to enter.</h1>
+    <button onclick="playJumpScare()">Are you ready?</button>
+    <audio id="jumpScareSound" src="night-ambience-long-25096.mp3" autoplay></audio>
+
+    <div id="jumpscare">
+        <img src="littlegirl.webp">
+    </div>
+
+    <script>
+        function playJumpScare() {
+            var jumpScareSound = new Audio("fuzzy-jumpscare-80560.mp3");
+            jumpScareSound.play();
+
+            var jumpScareImage = new Image();
+            jumpScareImage.onload = function() {
+                var canvas = document.createElement("canvas");
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                canvas.style.position = "fixed";
+                canvas.style.top = "0";
+                canvas.style.left = "0";
+                canvas.style.zIndex = "9999";
+                document.body.appendChild(canvas);
+
+                var context = canvas.getContext("2d");
+                context.drawImage(jumpScareImage, 0, 0, canvas.width, canvas.height);
+
+                setTimeout(function() {
+                    canvas.remove();
+                }, 1000);
+            };
+            jumpScareImage.src = "littlegirl.webp";
+        }
+
+        function speakText(text) {
+            var synth = window.speechSynthesis;
+            var utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.8;
+            utterance.pitch = 1;
+            synth.speak(utterance);
+        }
+
+        function stopSpeaking() {
+            var synth = window.speechSynthesis;
+            synth.cancel();
+        }
+    </script>
+</body>
+</html>
